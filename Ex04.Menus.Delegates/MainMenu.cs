@@ -1,13 +1,9 @@
 ﻿using System;
 
-namespace Ex04.Menus.Interfaces
+namespace Ex04.Menus.Delegates
 {
-    public interface IMenuChoiceObserver
-    {
-        void ReportMenuChoice(MenuItem i_MenueItem);
-    }
 
-    public class MainMenu : IMenuChoiceObserver
+    public class MainMenu
     {
         private SubMenuItem m_MainMenu;
         private SubMenuItem m_CurrentActiveMenu;
@@ -46,21 +42,21 @@ namespace Ex04.Menus.Interfaces
                 }
                 else
                 {
-                    m_CurrentActiveMenu = m_CurrentActiveMenu.FatherMenuItem;
+                    m_CurrentActiveMenu = m_CurrentActiveMenu.FatherSubMenuItem;
                 }
             }
             else
             {
-                m_CurrentActiveMenu.MenuItemsList[i_UserChoice - 1].NotifyChoice();
+                m_CurrentActiveMenu.MenuItemList[i_UserChoice - 1].OnClickedMenuItem();
             }
         }
 
         private void InitSubMenuHierarchy(MenuItem i_MenuItem)
         {
-            i_MenuItem.MenueChoiceObserverList.Add(this);
+            i_MenuItem.ReportClickedMenuItem += ReportMenuChoice;
             if (i_MenuItem is SubMenuItem)
             {
-                foreach (MenuItem menuItem in (i_MenuItem as SubMenuItem).MenuItemsList)
+                foreach (MenuItem menuItem in (i_MenuItem as SubMenuItem).MenuItemList)
                 {
                     InitSubMenuHierarchy(menuItem);
                 }
@@ -76,8 +72,8 @@ namespace Ex04.Menus.Interfaces
             }
             else
             {
-                (i_MenueItem as ExecuteFlowMenueItem).FlowLogic.ExecuteFlowLogic();
-                m_CurrentActiveMenu = m_CurrentActiveMenu.FatherMenuItem;
+                (i_MenueItem as FunctionMenuItem).OnExecuteFunction();
+                m_CurrentActiveMenu = m_CurrentActiveMenu.FatherSubMenuItem;
                 UI.WaitForUserSignalToContinue();
             }
         }

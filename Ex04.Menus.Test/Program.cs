@@ -1,5 +1,7 @@
-﻿using System;
-using Ex04.Menus.Interfaces;
+﻿using Ex04.Menus.Interfaces;
+using Ex04.Menus.Delegates;
+using System;
+
 
 namespace Ex04.Menus.Test
 {
@@ -13,7 +15,49 @@ namespace Ex04.Menus.Test
 
         private static void runDelegateImplementaion()
         {
-            throw new NotImplementedException();
+            //Menu Item 1
+            Delegates.SubMenuItem actionsAndInfo = new Delegates.SubMenuItem("Actions and Info");
+
+            //Menu Item 1.1
+            FunctionMenuItem displayVersion = new FunctionMenuItem("Display Version");
+            displayVersion.m_ExecuteFunction += DisplayVersion.Display;
+            actionsAndInfo.AddMenuItem(displayVersion);
+
+            //Menu Item 1.2
+            Delegates.SubMenuItem actions = new Delegates.SubMenuItem("Actions");
+
+            //Menu Item 1.2.1
+            FunctionMenuItem spaceCounter = new FunctionMenuItem("Count Spaces");
+            spaceCounter.m_ExecuteFunction += SpaceCounter.Count;
+            actions.AddMenuItem(spaceCounter);
+
+            //Menu Item 1.2.2
+            FunctionMenuItem charsCounter = new FunctionMenuItem("Chars Count");
+            charsCounter.m_ExecuteFunction += CharsCounter.Count;
+            actions.AddMenuItem(charsCounter);
+            actionsAndInfo.AddMenuItem(actions);
+
+            //Menu Item 2
+            Delegates.SubMenuItem dateAndTime = new Delegates.SubMenuItem("Show Date/Time");
+
+            //Menu Item 2.1
+            FunctionMenuItem showTime = new FunctionMenuItem("Show Time");
+            showTime.m_ExecuteFunction += DisplayTime.Display;
+            dateAndTime.AddMenuItem(showTime);
+
+            //Menu Item 2.2
+            FunctionMenuItem showDate = new FunctionMenuItem("Show Date");
+            showDate.m_ExecuteFunction += DisplayDate.Display;
+            dateAndTime.AddMenuItem(showDate);
+
+            /* Prepare main menu */
+            Delegates.SubMenuItem mainMenu = new Delegates.SubMenuItem("Main Menu - Delegates Implemented");
+            mainMenu.AddMenuItem(actionsAndInfo);
+            mainMenu.AddMenuItem(dateAndTime);
+            Delegates.MainMenu interfaceMainMenu = new Delegates.MainMenu(mainMenu);
+
+            /* execute */
+            interfaceMainMenu.Show();
         }
 
         private static void runInterfaceImplementaion()
@@ -21,14 +65,14 @@ namespace Ex04.Menus.Test
             /* Prepare all menus */
 
             //Menu Item 1
-            Interfaces.SubMenuItem actionsAndInfo = new SubMenuItem("Actions and Info");
+            Interfaces.SubMenuItem actionsAndInfo = new Interfaces.SubMenuItem("Actions and Info");
 
             //Menu Item 1.1
             IExecuteFlowLogic displayVersion = new DisplayVersion();
             actionsAndInfo.AddMenuItem(new ExecuteFlowMenueItem("Display Version", displayVersion));
 
             //Menu Item 1.2
-            SubMenuItem actions = new SubMenuItem("Actions");
+            Interfaces.SubMenuItem actions = new Interfaces.SubMenuItem("Actions");
 
             //Menu Item 1.2.1
             IExecuteFlowLogic spaceCounter = new SpaceCounter();
@@ -40,7 +84,7 @@ namespace Ex04.Menus.Test
             actionsAndInfo.AddMenuItem(actions);
 
             //Menu Item 2
-            SubMenuItem dateAndTime = new SubMenuItem("Show Date/Time");
+            Interfaces.SubMenuItem dateAndTime = new Interfaces.SubMenuItem("Show Date/Time");
 
             //Menu Item 2.1
             IExecuteFlowLogic showTime = new DisplayTime();
@@ -51,10 +95,10 @@ namespace Ex04.Menus.Test
             dateAndTime.AddMenuItem(new ExecuteFlowMenueItem("Show Date", showDate));
 
             /* Prepare main menu */
-            SubMenuItem mainMenu = new SubMenuItem("Main Menu - Interface Implemented");
+            Interfaces.SubMenuItem mainMenu = new Interfaces.SubMenuItem("Main Menu - Interface Implemented");
             mainMenu.AddMenuItem(actionsAndInfo);
             mainMenu.AddMenuItem(dateAndTime);
-            MainMenu interfaceMainMenu = new MainMenu(mainMenu);
+            Interfaces.MainMenu interfaceMainMenu = new Interfaces.MainMenu(mainMenu);
 
             /* execute */
             interfaceMainMenu.Show();
