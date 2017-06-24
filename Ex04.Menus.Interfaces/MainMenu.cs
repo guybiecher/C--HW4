@@ -81,7 +81,7 @@ namespace Ex04.Menus.Interfaces
             else
             {
                 (i_MenueItem as ExecuteFlowMenueItem).FlowLogic.ExecuteFlowLogic();
-                m_CurrentActiveMenu = m_MainMenu;
+                m_CurrentActiveMenu = m_CurrentActiveMenu.FatherMenuItem;
                 UI.WaitForUserSignalToContinue();
             }
         }
