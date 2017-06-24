@@ -19,7 +19,12 @@ namespace Ex04.Menus.Interfaces
         public List<MenuItem> MenuItemsList
         {
             get => m_MenuItemsList;
-            set => m_MenuItemsList = value;
+        }
+
+        public void AddMenuItem (MenuItem i_MenuItem)
+        {
+            i_MenuItem.FatherMenuItem = this;
+            m_MenuItemsList.Add(i_MenuItem);
         }
     }
 }
