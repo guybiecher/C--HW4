@@ -30,8 +30,8 @@ namespace Ex04.Menus.Delegates
         {
             int userChoice;
 
-            Console.WriteLine("Please enter your choice (0-{0} or 0 to {1}):",
-                i_NumOfOptionsInSubMenu,
+            Console.WriteLine("Please enter your choice (1-{0} or 0 to {1}):",
+                i_NumOfOptionsInSubMenu - 1,
                 (i_IsMainMenu ? k_ExitTitle : k_BackTitle));
             string userInput = Console.ReadLine();
             bool isValidInput = int.TryParse(userInput, out userChoice);
